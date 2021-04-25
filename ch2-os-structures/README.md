@@ -3,7 +3,7 @@
 |Name|Description|
 |---|---|
 |proc_jiffies.c|kernel module that creates a /proc file named /proc/jiffies that <br/>reports the current value of jiffies when the proc/jiffies file is read|
-|proc_seconds.c|kernel module that creates a /proc file named /proc/seconds that <br/>reports the number of elapsed seconds since the kernel module was loaded|
+|proc_seconds.c|kernel module that creates a /proc file named /proc/seconds that <br/>reports the number of elapsed seconds since the kernel module was loaded <br/>when the proc/seconds file is read |
 
 
 ## How to run
