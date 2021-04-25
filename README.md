@@ -4,5 +4,5 @@
 | No. | Name | Description |
 |---|---|---|
 |1|proc_jiffies.c|custom kernel module|
-|2|proc_seconds.c|custon kernel module|
+|2|proc_seconds.c|custom kernel module|
 
