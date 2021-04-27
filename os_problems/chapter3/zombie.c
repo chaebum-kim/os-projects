@@ -1,6 +1,6 @@
 /* zombie.c
 ** A program that forks a child process that ultimately becomes a zombie process.
-** The zombie process will remain in the system for 10 seconds.
+** The zombie process will remain in the system while parent proccess is alive.
 */
 
 #include <sys/types.h>
