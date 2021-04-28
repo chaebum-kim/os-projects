@@ -50,8 +50,6 @@ int main(int argc, char *argv[])
     }
     else if (pid > 0) // Parent process
     {
-        char temp[sizeof(current)];
-
         wait(NULL);
         // Get timestamp
         gettimeofday(&current, NULL);
