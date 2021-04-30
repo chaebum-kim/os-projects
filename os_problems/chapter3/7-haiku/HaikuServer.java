@@ -18,10 +18,7 @@ public class HaikuServer {
                 // Write to the socket
                 Haiku.loadHaiku();
                 Haiku haiku = new Haiku();
-                List<String> rand = haiku.randomHaiku();
-                rand.forEach((line) -> {
-                    pout.println(line);
-                });
+                pout.println(haiku.randomHaiku());
 
                 // Close the socket and resume listening for the connections
                 client.close();
@@ -35,20 +32,21 @@ public class HaikuServer {
 
 class Haiku {
 
-    static List<List<String>> haikus = new ArrayList<List<String>>();
+    static List<String> haikus = new ArrayList<String>();
 
     public static void loadHaiku() {
         try {
             BufferedReader bin = new BufferedReader(new FileReader("haiku.txt"));
-            List<String> haiku = new ArrayList<String>();
+            String haiku = "";
             String line;
 
             while ((line = bin.readLine()) != null) {
                 if (line.isEmpty()) {
                     haikus.add(haiku);
-                    haiku = new ArrayList<String>();
+                    haiku = "";
                 } else {
-                    haiku.add(line);
+                    haiku += line;
+                    haiku += "\n";
                 }
             }
             bin.close();
@@ -58,7 +56,7 @@ class Haiku {
         }
     }
 
-    public List<String> randomHaiku() {
+    public String randomHaiku() {
         Random rand = new Random();
         return haikus.get(rand.nextInt(haikus.size()));
     }
