@@ -14,3 +14,7 @@
 |3.21|4-collatz.c|A program that generates collatz sequence given a positive number.|
 |3.22|5-collatz_shm.c|A program that generates collatz sequence given a positive number using shared memory.|
 |3.23|6-quoteofday|A server that listens to port 6017 and delivers quote of the day.|
+|3.24|7-haiku|A server that listens to port 5575 and delivers a haiku.|
+|3.25|8-echo|An echo server.|
+|3.26|9-reverse.c| A program in which one process sends a string message to a second process, <br> and the second process reverses the case of each character in the message <br> and sends it back to the first process.|
+|3.27|10-filecopy.c|A simple file-copying program using ordinary pipes.|
