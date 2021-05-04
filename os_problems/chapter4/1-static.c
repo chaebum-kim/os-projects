@@ -15,9 +15,9 @@ int minimum;
 int length;
 
 // Workers
-void *avg(int *nums);
-void *max(int *nums);
-void *min(int *nums);
+void *avg(void *nums);
+void *max(void *nums);
+void *min(void *nums);
 
 /* main */
 int main(int argc, char *argv[])
@@ -60,12 +60,14 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-void *avg(int *nums)
+void *avg(void *nums)
 {
+    int *nums_ = (int *)nums;
     int sum = 0;
+
     for (int i = 0; i < length; i++)
     {
-        sum += nums[i];
+        sum += nums_[i];
     }
 
     average = sum / length;
@@ -73,26 +75,30 @@ void *avg(int *nums)
     pthread_exit(0);
 }
 
-void *max(int *nums)
+void *max(void *nums)
 {
+    int *nums_ = (int *)nums;
+
     maximum = 0;
     for (int i = 0; i < length; i++)
     {
-        if (nums[i] > maximum)
-            maximum = nums[i];
+        if (nums_[i] > maximum)
+            maximum = nums_[i];
     }
 
     pthread_exit(0);
 }
 
-void *min(int *nums)
+void *min(void *nums)
 {
-    minimum = nums[0];
+    int *nums_ = (int *)nums;
+
+    minimum = nums_[0];
 
     for (int i = 1; i < length; i++)
     {
-        if (nums[i] < minimum)
-            minimum = nums[i];
+        if (nums_[i] < minimum)
+            minimum = nums_[i];
     }
 
     pthread_exit(0);
