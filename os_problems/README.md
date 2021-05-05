@@ -18,3 +18,15 @@
 |3.25|8-echo|An echo server.|
 |3.26|9-reverse.c| A program in which one process sends a string message to a second process, <br> and the second process reverses the case of each character in the message <br> and sends it back to the first process.|
 |3.27|10-filecopy.c|A simple file-copying program using ordinary pipes.|
+
+### [Chapter4](https://github.com/chaebum-kim/os-projects/tree/master/os_problems/chapter4)
+| No | Name | Description |
+|---|---|---|
+|4.22|1-static.c|A multithreaded program that calcuates the average, the maximum, <br>the minimun values or numbers respectively.|
+|4.23|2-prime.c|A multithreaded program that outputs prime numbers.|
+|4.24|3-pi_thread.c|A multithreaded program that calcuates pi using Monte Carlo technique.|
+|4.25|4-pi_openmp.c|A program that calcuates pi using Monte Carlo technique. <br>It used OpenMp to parallelize the generation of points.|
+|4.26|5-date|Date server that services each client request in a separate thread.|
+|4.27|6-fibonacci.c|A multithreaded program that generates the Fibonacci sequence.|
+|4.28|7-pid_manager.c|A multithreaded program that tests pid manager from problem3.20|
+|4.29|8-echo|Echo server that services each client request in a separate thread.|
