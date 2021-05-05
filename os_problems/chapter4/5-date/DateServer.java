@@ -5,18 +5,15 @@ import java.io.*;
 public class DateServer {
     public static void main(String[] args) {
 
-        ExecutorService pool = Executors.newSingleThreadExecutor();
+        ExecutorService pool = Executors.newFixedThreadPool(5);
 
         try {
             ServerSocket sock = new ServerSocket(6013);
-
             // Listen for the connections
             while (true) {
                 Socket client = sock.accept();
-
                 // Services the client's request in a seperate thread
                 pool.execute(new Date(client));
-
             }
         } catch (IOException ioe) {
             System.err.println(ioe);
