@@ -7,8 +7,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define BUF_SIZE 4096;
-
 // Structure for passing data to threads
 typedef struct
 {
