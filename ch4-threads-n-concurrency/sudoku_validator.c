@@ -59,6 +59,12 @@ int main(int args, char *argv[])
         printf("\n");
     }
 
+    // Set default attributes of the threads
+    for (int i = 0; i < THREADS; i++)
+    {
+        pthread_attr_init(&(attrs[i]));
+    }
+
     // Assingn data and create threads
     for (int i = 0; i < 9; i++)
     {
