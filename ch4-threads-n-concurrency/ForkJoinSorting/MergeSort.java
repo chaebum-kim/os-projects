@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MergeSort<T extends Comparable<T>> extends RecursiveTask<List<T>> {
-    static final int THRESHOLD = 100;
+    static final int THRESHOLD = 10;
     private int begin;
     private int end;
     private List<T> list;
