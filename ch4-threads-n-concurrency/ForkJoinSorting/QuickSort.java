@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Collections;
 
 public class QuickSort<T extends Comparable<T>> extends RecursiveAction {
-    static final int THRESHOLD = 100;
+    static final int THRESHOLD = 10;
     private int begin;
     private int end;
     private List<T> list;
@@ -20,15 +20,18 @@ public class QuickSort<T extends Comparable<T>> extends RecursiveAction {
             // Do Insertion Sort
             InsertionSort<T> insertionSort = new InsertionSort<T>();
             insertionSort.sort(begin, end, list);
+
         } else {
             // Locate pivot value(last value)
-            int pivot = locatePivot(begin, end, list);
-
-            QuickSort<T> leftSort = new QuickSort<T>(begin, pivot - 1, list);
-            QuickSort<T> rightSort = new QuickSort<T>(pivot + 1, end, list);
+            int pivotIndex = locatePivot(begin, end, list);
+            QuickSort<T> leftSort = new QuickSort<T>(begin, pivotIndex - 1, list);
+            QuickSort<T> rightSort = new QuickSort<T>(pivotIndex + 1, end, list);
 
             leftSort.fork();
             rightSort.fork();
+
+            leftSort.join();
+            rightSort.join();
         }
     }
 

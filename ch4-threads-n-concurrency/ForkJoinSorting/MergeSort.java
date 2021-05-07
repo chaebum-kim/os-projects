@@ -24,7 +24,7 @@ public class MergeSort<T extends Comparable<T>> extends RecursiveTask<List<T>> {
             // Divide the list into tow halves and make copy of them
             int half = (begin + end) / 2;
             List<T> one = new ArrayList<>(list.subList(begin, half));
-            List<T> other = new ArrayList<>(list.subList(half + 1, end));
+            List<T> other = new ArrayList<>(list.subList(half, end + 1));
 
             // Do merge sort on each divided list
             MergeSort<T> leftSort = new MergeSort<T>(one);
@@ -39,28 +39,25 @@ public class MergeSort<T extends Comparable<T>> extends RecursiveTask<List<T>> {
     private List<T> merge(List<T> one, List<T> other) {
         // Initialize merged list
         List<T> mergedList = new ArrayList<>(one.size() + other.size());
-        int i = 0, j = 0, k = 0;
+        int i = 0, j = 0;
 
         // Merge the lists
         while (i < one.size() && j < other.size()) {
             if (one.get(i).compareTo(other.get(j)) < 0) {
-                mergedList.set(k, one.get(i));
+                mergedList.add(one.get(i));
                 i++;
             } else {
-                mergedList.set(k, other.get(j));
+                mergedList.add(other.get(j));
                 j++;
             }
-            k++;
         }
         while (i < one.size()) {
-            mergedList.set(k, one.get(i));
+            mergedList.add(one.get(i));
             i++;
-            k++;
         }
         while (j < other.size()) {
-            mergedList.set(k, other.get(i));
+            mergedList.add(other.get(j));
             j++;
-            k++;
         }
 
         return mergedList;
