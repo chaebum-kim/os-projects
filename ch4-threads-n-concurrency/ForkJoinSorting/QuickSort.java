@@ -22,8 +22,7 @@ public class QuickSort<T extends Comparable<T>> extends RecursiveAction {
             insertionSort.sort(begin, end, list);
 
         } else {
-            // Locate pivot value(last value)
-            int pivotIndex = locatePivot(begin, end, list);
+            int pivotIndex = partition(begin, end, list);
             QuickSort<T> leftSort = new QuickSort<T>(begin, pivotIndex - 1, list);
             QuickSort<T> rightSort = new QuickSort<T>(pivotIndex + 1, end, list);
 
@@ -35,7 +34,7 @@ public class QuickSort<T extends Comparable<T>> extends RecursiveAction {
         }
     }
 
-    private int locatePivot(int begin, int end, List<T> list) {
+    private int partition(int begin, int end, List<T> list) {
         T pivot = list.get(end);
         int pivotIndex = begin;
 
