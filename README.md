@@ -11,7 +11,7 @@
 |---|---|---|
 |1|shell.c|A C program to serve as a shell interface|
 
-### [Chapter4. Threads & Concurrency ](https://github.com/chaebum-kim/os-projects/tree/master/ch4-thread-n-concurrency)
+### [Chapter4. Threads & Concurrency ](https://github.com/chaebum-kim/os-projects/tree/master/ch4-threads-n-concurrency)
 | No. | Name | Description |
 |---|---|---|
 |1|sudoku_validator.c|A multithreaded program that determines whether the solution to a Sudoku puzzle is valid|
