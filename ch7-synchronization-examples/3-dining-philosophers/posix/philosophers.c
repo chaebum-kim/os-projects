@@ -79,13 +79,14 @@ void test(int i)
 
 void *routine(void *i)
 {
-    int num = *((int *)i);
-    pickup_forks(num);
-    printf("Philosopher%d is eating.\n", num);
-    sleep(3);
-    return_forks(num);
-    printf("Philosopher%d is thinking.\n", num);
-    sleep(3);
-
-    pthread_exit(0);
+    while (1)
+    {
+        int num = *((int *)i);
+        pickup_forks(num);
+        printf("Philosopher%d is eating.\n", num);
+        sleep(3);
+        return_forks(num);
+        printf("Philosopher%d is thinking.\n", num);
+        sleep(3);
+    }
 }
