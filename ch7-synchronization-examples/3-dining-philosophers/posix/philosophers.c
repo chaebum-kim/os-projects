@@ -20,25 +20,24 @@ enum status
     thinking,
     hungry
 } state[5];
-sem_t ready[5];
+pthread_cond_t self[5];
 
 int main(int argc, char *argv[])
 {
     pthread_t tids[5];
     int nums[5] = {0, 1, 2, 3, 4};
 
-    // Initialize the mutex and the semaphore
+    // Initialize the mutex and the condition variables
     pthread_mutex_init(&mutex, NULL);
     for (int i = 0; i < 5; i++)
-        sem_init(&(ready[i]), 0, 0);
+        pthread_cond_init(&(self[i]), NULL);
 
     // Create the threads
     for (int i = 0; i < 5; i++)
         pthread_create(&(tids[i]), NULL, routine, &(nums[i]));
 
-    // Wait for the threads to exit
-    for (int i = 0; i < 5; i++)
-        pthread_join(tids[i], NULL);
+    // Sleep for 10 seconds
+    sleep(10);
 
     return 0;
 }
@@ -51,8 +50,10 @@ void pickup_forks(int i)
 
     // Pick up the forks and eat if both forks are available
     test(i);
+    if (state[i] != eating)
+        pthread_cond_wait(&(self[i]), &mutex);
+
     pthread_mutex_unlock(&mutex);
-    sem_wait(&(ready[i]));
 }
 
 void return_forks(int i)
@@ -73,7 +74,7 @@ void test(int i)
     if ((state[(i + 4) % 5] != eating) && (state[i] == hungry) && (state[(i + 1) % 5] != eating))
     {
         state[i] = eating;
-        sem_post(&(ready[i]));
+        pthread_cond_signal(&(self[i]));
     }
 }
 
