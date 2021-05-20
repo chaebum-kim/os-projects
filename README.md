@@ -26,3 +26,11 @@
 |3|schedule_priority.c|Priority scheduling|
 |4|schedule_rr.c|Round-robin(RR)|
 |5|schedule_priority_rr.c|Priority with round-robin|
+
+### [Chapter7. Synchronization Examples ](https://github.com/chaebum-kim/os-projects/tree/master/ch7-synchronization-examples)
+| No. | Name | Description |
+|---|---|---|
+|1|1-thread-pool|Implementation of thread pool by POSIX and JAVA|
+|2|2-sleepingTA.c|A program that coordinates the activites of TA and students using POSIX mutex lock and semaphores|
+|3|3-dining-philosophers|A solution to the dining-philosophers problem using condition variables of POSIX and JAVA|
+|4|4-producer-consumer|A solution to the producer-consumer problem using POSIX mutex lock and semaphores|
