@@ -38,3 +38,10 @@
 |7.15|2-fibonacci.c|Modified problem 4.27 so that parent thread can access finbonacci numbers <br>as soon as they are computed by child thread.|
 |7.17|3-pi_thread.c|A multi-threaded program that calculates pi using Monte Carlo technique. <br>Race condition is prevented.|
 |7.19|4-barrier|A barrier API|
+
+### [Chapter8](https://github.com/chaebum-kim/os-projects/tree/master/os_problems/chapter8)
+| No | Name | Description |
+|---|---|---|
+|8.32|1-bridge.c|A solution to Exercise 8.30 using POSIX synchronization.|
+|8.33|2-transaction|Java implementation of Figure 8.7 where locks are acquired in order using<br>System.identityHashCode()|
+
