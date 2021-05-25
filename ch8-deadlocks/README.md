@@ -1,11 +1,11 @@
 ### Follwing commands are available:
 
-1. RQ: Request resources
-   RQ customer_num resources
+1. RQ: Request resources<br>
+   RQ customer_num resources<br>
    eg. RQ 0 3 1 2 1
 
-2. RL: Release resources
-   RL customer_num resources
+2. RL: Release resources<br>
+   RL customer_num resources<br>
    eg. RL 4 1 2 3 1
 
 3. \*: Print out the values of the available, maximum, allocation, and need arrays
