@@ -34,3 +34,9 @@
 |2|2-sleepingTA.c|A program that coordinates the activites of TA and students using POSIX mutex lock and semaphores|
 |3|3-dining-philosophers|A solution to the dining-philosophers problem using condition variables of POSIX and JAVA|
 |4|4-producer-consumer|A solution to the producer-consumer problem using POSIX mutex lock and semaphores|
+
+### [Chapter8. Deadlocks ](https://github.com/chaebum-kim/os-projects/tree/master/ch8-deadlocks)
+| No. | Name | Description |
+|---|---|---|
+|1|main.c|A program that implements the banker's algorithm.<br>The banker will grant a request only if it leaves the system in a safe state.|
+
