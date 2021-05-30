@@ -40,3 +40,9 @@
 |---|---|---|
 |1|main.c|A program that implements the banker's algorithm.<br>The banker will grant a request only if it leaves the system in a safe state.|
 
+### [Chapter9. Main Memory ](https://github.com/chaebum-kim/os-projects/tree/master/ch9-main-memory)
+| No. | Name | Description |
+|---|---|---|
+|1|main.c|A program that simulates contiguous memory allocation.|
+
+
