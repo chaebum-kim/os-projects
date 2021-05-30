@@ -124,7 +124,7 @@ void compact(void)
         // Create new hole
         hole.begin = begin;
         hole.end = MAX - 1;
-        hole.size = hole.end - hole.begin - 1;
+        hole.size = hole.end - hole.begin + 1;
 
         // Add new hole to the list
         AppendFromTail(&holes, &hole, sizeof(Hole));
