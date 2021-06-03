@@ -12,7 +12,7 @@ int lru_simulate(char *page_reference, int frame_nums);
 void lru_init_pages(LinkedList *pages);
 
 // Find the page to be replaced
-char lru_get_replacement(Frames *frames, LinkedList *pages);
+char lru_get_replacement(LinkedList *pages);
 
 // Move the given node to the end
 void update_pages(LinkedList *pages, Node *node);

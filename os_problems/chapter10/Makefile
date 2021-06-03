@@ -2,8 +2,8 @@
 CC = gcc
 CFLAGS = -Wall
 
-all: fifo.o lru.o opt.o frame.o LinkedList.o main.o
-	$(CC) $(CFLAGS) -o main fifo.o lru.o opt.o frame.o LinkedList.o main.o
+all: main.o fifo.o lru.o opt.o frame.o LinkedList.o main.o
+	$(CC) $(CFLAGS) -o main main.o fifo.o lru.o opt.o frame.o LinkedList.o
 
 fifo.o: fifo.c fifo.h
 	$(CC) $(CFLAGS) -c fifo.c

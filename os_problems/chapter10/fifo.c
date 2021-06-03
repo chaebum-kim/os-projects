@@ -2,13 +2,19 @@
 #include "fifo.h"
 #include "frame.h"
 #include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 int fifo_simulate(char *page_reference, int frame_nums)
 {
-    Frames frames;
     LinkedList pages;
-    int page_faults = 0, index;
-    char page;
+    Frame frames;
+    int page_table[10];
+    int page_faults = 0, frame_num, page_num, replaced;
+
+    // Initialize the page_table
+    for (int i = 0; i < 10; i++)
+        page_table[i] = -1;
 
     // Initialize the frames
     init_frames(&frames, frame_nums);
@@ -18,30 +24,37 @@ int fifo_simulate(char *page_reference, int frame_nums)
 
     for (int i = 0, n = strlen(page_reference); i < n; i++)
     {
-        page = page_reference[i];
+        page_num = page_reference[i] - '0';
 
         // Check if the page is on the memory
-        index = find_page(&frames, page);
+        frame_num = page_table[page_num];
 
-        // If page fault occurs
-        if (index < 0)
+        // If page fault occur_nums
+        if (frame_num < 0)
         {
             page_faults++;
 
             if (frames.count < frames.length)
             {
-                index = frames.count;
+                frame_num = frames.count;
                 frames.count++;
             }
             else
-                index = fifo_get_replacement(&frames, &pages);
+            {
+                replaced = fifo_get_replacement(&pages);
+                frame_num = page_table[replaced];
+                page_table[replaced] = -1;
+            }
 
-            frames.frames[index] = page;
+            // Update the page table
+            page_table[page_num] = frame_num;
 
-            // Add the index of the current page to the pages list
-            AppendFromTail(&pages, &index, sizeof(int));
+            // Add the current page number to the pages list
+            AppendFromTail(&pages, &page_num, sizeof(int));
         }
     }
+
+    Destroy(&pages);
 
     return page_faults;
 }
@@ -51,12 +64,12 @@ void fifo_init_pages(LinkedList *pages)
     Create(pages);
 }
 
-int fifo_get_replacement(Frames *frames, LinkedList *pages)
+int fifo_get_replacement(LinkedList *pages)
 {
-    int index;
+    int page_num;
 
-    GetAt(pages, pages->head, &index, sizeof(int));
+    GetAt(pages, pages->head, &page_num, sizeof(int));
     DeleteFromHead(pages);
 
-    return index;
+    return page_num;
 }

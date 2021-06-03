@@ -6,9 +6,14 @@
 
 int lru_simulate(char *page_reference, int frame_nums)
 {
-    Frames frames;
+    Frame frames;
     LinkedList pages;
-    int page_faults = 0;
+    int page_table[10];
+    int page_faults = 0, page_num, frame_num, replaced;
+
+    // Initialize the page table
+    for (int i = 0; i < 10; i++)
+        page_table[i] = -1;
 
     // Initialie the frames
     init_frames(&frames, frame_nums);
@@ -18,39 +23,46 @@ int lru_simulate(char *page_reference, int frame_nums)
 
     for (int i = 0, n = strlen(page_reference); i < n; i++)
     {
-        char page = page_reference[i], replaced;
-        int index = find_page(&frames, page);
+        page_num = page_reference[i] - '0';
+
+        // Check if the page is on the memory
+        frame_num = page_table[page_num];
 
         // If page fault occurs
-        if (index < 0)
+        if (frame_num < 0)
         {
             page_faults++;
 
             if (frames.count < frames.length)
             {
-                index = frames.count;
+                frame_num = frames.count;
                 frames.count++;
             }
             else
             {
-                replaced = lru_get_replacement(&frames, &pages);
-                index = find_page(&frames, replaced);
+                replaced = lru_get_replacement(&pages);
+                frame_num = page_table[replaced];
+                page_table[replaced] = -1;
             }
 
-            frames.frames[index] = page;
+            // Update the page table
+            page_table[page_num] = frame_num;
 
             // Add the current page to the pages list
-            AppendFromTail(&pages, &page, sizeof(char));
+            AppendFromTail(&pages, &page_num, sizeof(int));
         }
         else // If page fault does not occur
         {
             // Find the page in the pages list
-            Node *node = LinearSearchUnique(&pages, &page, compare_pages);
+            Node *node = LinearSearchUnique(&pages, &page_num, compare_pages);
 
             // Move the page to the end of the pages list
             update_pages(&pages, node);
         }
     }
+
+    Destroy(&pages);
+
     return page_faults;
 }
 
@@ -59,14 +71,14 @@ void lru_init_pages(LinkedList *pages)
     Create(pages);
 }
 
-char lru_get_replacement(Frames *frames, LinkedList *pages)
+char lru_get_replacement(LinkedList *pages)
 {
-    char page;
+    int page_num;
 
-    GetAt(pages, pages->head, &page, sizeof(char));
+    GetAt(pages, pages->head, &page_num, sizeof(int));
     DeleteFromHead(pages);
 
-    return page;
+    return page_num;
 }
 
 void update_pages(LinkedList *pages, Node *node)
@@ -92,10 +104,10 @@ void update_pages(LinkedList *pages, Node *node)
 
 int compare_pages(void *one, void *other)
 {
-    char *page1 = (char *)one;
-    char *page2 = (char *)other;
+    int *page_num1 = (int *)one;
+    int *page_num2 = (int *)other;
 
-    if (*page1 == *page2)
+    if (*page_num1 == *page_num2)
         return 0;
     else
         return -1;

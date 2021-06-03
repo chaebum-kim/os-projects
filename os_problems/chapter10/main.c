@@ -32,12 +32,14 @@ int main(int argc, char *argv[])
     reference[MAX_STRING] = '\0';
 
     // Output the result
+    printf("-------------------------------------------------------------------\n");
     printf("Page-reference string: %s\n", reference);
+    printf("-------------------------------------------------------------------\n");
     printf("The number of page faults occured:\n");
-    printf("-----------------------------------------\n");
     printf("FIFO: %d\n", fifo_simulate(reference, frame_nums));
     printf("LRU: %d\n", lru_simulate(reference, frame_nums));
     printf("OPT: %d\n", opt_simulate(reference, frame_nums));
+    printf("-------------------------------------------------------------------\n");
 
     return 0;
 }

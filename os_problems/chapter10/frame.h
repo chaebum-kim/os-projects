@@ -2,19 +2,13 @@
 #ifndef FRAME_H
 #define FRAME_H
 
-#include <stdlib.h>
-
-typedef struct _frames
+typedef struct _frame
 {
     int length;
     int count;
-    char *frames;
-} Frames;
+} Frame;
 
 // Initialie the frames
-void init_frames(Frames *frames, int frame_nums);
-
-// Find the page in frames
-int find_page(Frames *frames, char page);
+void init_frames(Frame *frames, int frame_nums);
 
 #endif

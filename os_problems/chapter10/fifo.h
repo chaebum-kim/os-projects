@@ -11,6 +11,6 @@ int fifo_simulate(char *page_reference, int frame_nums);
 void fifo_init_pages(LinkedList *pages);
 
 // Find the page index to be replaced
-int fifo_get_replacement(Frames *frames, LinkedList *pages);
+int fifo_get_replacement(LinkedList *pages);
 
 #endif
