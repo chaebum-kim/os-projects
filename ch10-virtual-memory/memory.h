@@ -11,7 +11,7 @@ typedef struct _memory
     char *memory;
 } Memory;
 
-Memory memory;
+extern Memory memory;
 
 // Initialie the memory
 void init_memory();

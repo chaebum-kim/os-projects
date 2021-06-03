@@ -4,7 +4,7 @@
 
 #include "size.h"
 
-int page_table[PAGE_ENTRIES];
+extern int page_table[PAGE_ENTRIES];
 
 void init_table();
 
