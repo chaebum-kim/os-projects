@@ -45,8 +45,14 @@
 |8.32|1-bridge.c|A solution to Exercise 8.30 using POSIX synchronization.|
 |8.33|2-transaction|Java implementation of Figure 8.7 where locks are acquired in order using<br>System.identityHashCode()|
 
-### [Chapter9](https://github.com/chaebum-kim/os-projects/tree/master/os_problems/chapter0)
+### [Chapter9](https://github.com/chaebum-kim/os-projects/tree/master/os_problems/chapter9)
 | No | Name | Description |
 |---|---|---|
 |9.28|addresses.c|A program that outputs the page number and offset for a given virtual address.|
+
+### [Chapter10](https://github.com/chaebum-kim/os-projects/tree/master/os_problems/chapter10)
+| No | Name | Description |
+|---|---|---|
+|10.44|main.c|A program that implements the FIFO, LRU, and OPT page-replacement algorithms.|
+
 
