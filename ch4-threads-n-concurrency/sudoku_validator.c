@@ -39,7 +39,6 @@ int get_max_col(int box);
 int main(int args, char *argv[])
 {
     pthread_t tids[THREADS] = {0};
-    pthread_attr_t attrs[THREADS] = {0};
     parameters *data[9];
 
     if (validate_input(args) != 0)
@@ -53,16 +52,8 @@ int main(int args, char *argv[])
     for (int i = 0; i < 9; i++)
     {
         for (int j = 0; j < 9; j++)
-        {
             printf("%d ", sudoku[i][j]);
-        }
         printf("\n");
-    }
-
-    // Set default attributes of the threads
-    for (int i = 0; i < THREADS; i++)
-    {
-        pthread_attr_init(&(attrs[i]));
     }
 
     // Assingn data and create threads
@@ -73,22 +64,18 @@ int main(int args, char *argv[])
         data[i]->col = i;
         data[i]->box = i;
 
-        pthread_create(&(tids[i]), &(attrs[i]), check_row, data[i]);
-        pthread_create(&(tids[i + 9]), &(attrs[i + 9]), check_col, data[i]);
-        pthread_create(&(tids[i + 18]), &(attrs[i + 18]), check_box, data[i]);
+        pthread_create(&(tids[i]), NULL, check_row, data[i]);
+        pthread_create(&(tids[i + 9]), NULL, check_col, data[i]);
+        pthread_create(&(tids[i + 18]), NULL, check_box, data[i]);
     }
 
     // Wait for the threads to exit
     for (int i = 0; i < THREADS; i++)
-    {
         pthread_join(tids[i], NULL);
-    }
 
     // Free data
     for (int i = 0; i < LENGTH; i++)
-    {
         free(data[i]);
-    }
 
     // Free sudoku
     free(sudoku);
@@ -111,10 +98,10 @@ void *check_row(void *param)
 {
     parameters *data = (parameters *)param;
     int row = data->row;
-    int col = 0;
+    int col;
     int nums[9] = {0};
 
-    for (col; col < 9; col++)
+    for (col = 0; col < 9; col++)
     {
         int num = sudoku[row][col];
         if (nums[num - 1]) // The number is repeated (not valid)
@@ -132,11 +119,11 @@ void *check_row(void *param)
 void *check_col(void *param)
 {
     parameters *data = (parameters *)param;
-    int row = 0;
+    int row;
     int col = data->col;
     int nums[9] = {0};
 
-    for (row; row < 9; row++)
+    for (row = 0; row < 9; row++)
     {
         int num = sudoku[row][col];
         if (nums[num - 1]) // The number is repeated (not valid)
@@ -177,9 +164,7 @@ void *check_box(void *param)
     }
 
     if (is_valid)
-    {
         box_checks[box] = 1;
-    }
 
     pthread_exit(0);
 }
