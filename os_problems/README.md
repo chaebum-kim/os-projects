@@ -55,4 +55,10 @@
 |---|---|---|
 |10.44|main.c|A program that implements the FIFO, LRU, and OPT page-replacement algorithms.|
 
+### [Chapter11](https://github.com/chaebum-kim/os-projects/tree/master/os_problems/chapter11)
+| No | Name | Description |
+|---|---|---|
+|11.27|schedule.c|A program that implements the the FCFS, SCAN, C-SCAN disk-scheduling algorithms.|
+
+
 
