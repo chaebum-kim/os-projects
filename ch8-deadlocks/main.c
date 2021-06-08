@@ -11,18 +11,14 @@
 #define MAX_LINE 16
 #define MAX_COMMAND 4
 
-int parse(char *input, char *command, int *arguments);
-void request(int *arguments);
-void release(int *arguments);
+int parse_input(char *input, char *args[]);
+int request(int argc, char *args[]);
+int release(int argc, char *args[]);
 void output_values(void);
 
 int main(int argc, char *argv[])
 {
-    char input[MAX_LINE];
-    char command[MAX_COMMAND];
-    int arguments[NUMBER_OF_RESOURCES + 1] = {
-        0,
-    };
+    char input[MAX_LINE], *args[MAX_LINE];
 
     // Get command line arguments and initialize availabe resources
     init_available(argc, argv);
@@ -39,69 +35,84 @@ int main(int argc, char *argv[])
         fgets(input, MAX_LINE, stdin);
 
         // Parse the command
-        if (parse(input, command, arguments) < 0)
-        {
-            printf("Command Not Found.\n");
-            continue;
-        }
+        int n = parse_input(input, args);
 
         // Execute the command
-        if (strcmp(command, "RQ") == 0)
-            request(arguments);
-        else if (strcmp(command, "RL") == 0)
-            release(arguments);
-        else if (strcmp(command, "*") == 0)
+        if (strcmp(args[0], "RQ") == 0)
+            request(n - 1, args + 1);
+        else if (strcmp(args[0], "RL") == 0)
+            release(n - 1, args + 1);
+        else if (strcmp(args[0], "*") == 0)
             output_values();
+        else if (strcmp(args[0], "exit") == 0)
+            break;
         else
-            return 0;
+            printf("Error: Unrecognized command\n");
 
         // Initialize command and arguments
-        memset(command, 0, MAX_COMMAND);
-        memset(arguments, 0, sizeof(int) * (NUMBER_OF_RESOURCES + 1));
+        memset(input, 0, MAX_LINE);
+        memset(args, 0, sizeof(args));
     }
 
     return 0;
 }
 
-int parse(char *input, char *command, int *arguments)
+int parse_input(char *input, char *args[])
 {
-    char *temp[NUMBER_OF_RESOURCES + 2];
     int i = 0;
 
-    temp[i] = strtok(input, " \n");
-    while (temp[i] != NULL)
+    args[i] = strtok(input, " \n");
+    while (args[i] != NULL)
     {
         i++;
-        temp[i] = strtok(NULL, " \n");
+        args[i] = strtok(NULL, " \n");
     }
 
-    if (strcmp(temp[0], "RQ") != 0 && strcmp(temp[0], "RL") != 0 &&
-        strcmp(temp[0], "*") != 0 && strcmp(temp[0], "exit") != 0)
-        return -1;
-
-    memcpy(command, temp[0], MAX_COMMAND);
-    int j = 1;
-    while (j < NUMBER_OF_RESOURCES + 2 && temp[j] != NULL)
-    {
-        arguments[j - 1] = atoi(temp[j]);
-        j++;
-    }
-
-    return 0;
+    return i;
 }
 
-void request(int *arguments)
+int request(int argc, char *args[])
 {
-    if (request_resources(arguments[0], arguments + 1) < 0)
+    int customer_num, resources[NUMBER_OF_RESOURCES];
+
+    if (argc != 5)
+    {
+        printf("Usage: RQ customer_num resources\n");
+        return -1;
+    }
+
+    customer_num = atoi(args[0]);
+
+    for (int i = 0; i < NUMBER_OF_RESOURCES; i++)
+        resources[i] = atoi(args[i + 1]);
+
+    if (request_resources(customer_num, resources) < 0)
         printf("Resource Request Denied.\n");
     else
         printf("Resource Request Granted.\n");
+
+    return 0;
 }
 
-void release(int *arguments)
+int release(int argc, char *args[])
 {
-    release_resources(arguments[0], arguments + 1);
+    int customer_num, resources[NUMBER_OF_RESOURCES];
+
+    if (argc != 5)
+    {
+        printf("Usage: RL customer_num resources\n");
+        return -1;
+    }
+
+    customer_num = atoi(args[0]);
+
+    for (int i = 0; i < NUMBER_OF_RESOURCES; i++)
+        resources[i] = atoi(args[i + 1]);
+
+    release_resources(customer_num, resources);
     printf("Resource Released.\n");
+
+    return 0;
 }
 
 void output_values(void)
