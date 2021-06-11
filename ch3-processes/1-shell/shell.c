@@ -31,7 +31,7 @@ enum Wait
 {
     True,
     False
-} wait_child = True;
+} wait_child;
 
 char *file_name;
 char **args2;
@@ -45,6 +45,7 @@ int main(void)
     pid_t pid;
 
     history[0] = 0;
+    wait_child = True;
 
     while (should_run)
     {
@@ -215,47 +216,6 @@ int redirect_output(char *filename)
 
     dup2(fd, STDOUT_FILENO);
     close(fd);
-
-    return 0;
-}
-
-int create_process(char *args[], char *args2[])
-{
-    pid_t pid;
-    int fd[2];
-
-    // Create the pipe
-    if (pipe(fd) == -1)
-    {
-        fprintf(stderr, "Pipe Failed\n");
-        return 1;
-    }
-
-    // Fork a child process
-    pid = fork();
-    if (pid < 0)
-    {
-        fprintf(stderr, "Fork Failed\n");
-        return 1;
-    }
-    if (pid == 0) // Child process
-    {
-        dup2(fd[WRITE_END], STDOUT_FILENO);
-        close(fd[READ_END]);
-        close(fd[WRITE_END]);
-        execvp(args[0], args);
-        fprintf(stderr, "First Execution Failed\n");
-        exit(1);
-    }
-    else // Parent process
-    {
-        dup2(fd[READ_END], STDIN_FILENO);
-        close(fd[READ_END]);
-        close(fd[WRITE_END]);
-        execvp(args2[0], args2);
-        fprintf(stderr, "Second Execution Failed\n");
-        exit(1);
-    }
 
     return 0;
 }
