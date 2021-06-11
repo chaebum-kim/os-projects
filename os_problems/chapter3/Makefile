@@ -21,4 +21,6 @@ collatz_shm: 5-collatz_shm.c
 reverse: 9-reverse.c
 	$(CC) $(CFLAGS) -o reverse 9-reverse.c
 
+filecopy: 10-filecopy.c
+	$(CC) $(CFLAGS) -o filecopy 10-filecopy.c
 

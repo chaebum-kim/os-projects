@@ -12,11 +12,17 @@
 #define WRITE_END 1
 #define BUF_SIZE 8192
 
-int main(int arg, char *argv[])
+int main(int argc, char *argv[])
 {
     int src, dst, in, fd[2];
     pid_t pid;
     char buffer[BUF_SIZE];
+
+    if (argc != 3)
+    {
+        fprintf(stderr, "Usage: ./filecopy <source file> <destination file>\n");
+        return 1;
+    }
 
     // Open files
     src = open(argv[1], O_RDONLY);
@@ -25,6 +31,7 @@ int main(int arg, char *argv[])
         perror("Failed");
         return 1;
     }
+
     dst = open(argv[2], O_WRONLY | O_CREAT | O_EXCL, 0666);
     if (dst < 0)
     {
@@ -48,23 +55,23 @@ int main(int arg, char *argv[])
     }
     if (pid > 0) // Parent process
     {
-        // Write to the pipe
         close(fd[READ_END]);
+
+        // Write to the pipe
         while ((in = read(src, buffer, BUF_SIZE)) > 0)
-        {
             write(fd[WRITE_END], buffer, in);
-        }
+
         close(fd[WRITE_END]);
         close(src);
     }
     else // Child process
     {
-        // Read from the pipe
         close(fd[WRITE_END]);
+
+        // Read from the pipe
         while ((in = read(fd[READ_END], buffer, BUF_SIZE)) > 0)
-        {
-            write(dst, buffer, in);
-        }
+            write(dst, buffer, in); // Write to the destination file
+
         close(fd[READ_END]);
         close(dst);
     }
