@@ -76,6 +76,7 @@ make reverse
 ```
 
 ## 10-filecopy.c
+1. Compile
 ```
 make filecopy
 ```
