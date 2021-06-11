@@ -79,12 +79,8 @@ void reverse(char *message)
     for (int i = 0, n = strlen(message); i < n; i++)
     {
         if (islower(message[i]))
-        {
             message[i] = toupper(message[i]);
-        }
         else if (isupper(message[i]))
-        {
             message[i] = tolower(message[i]);
-        }
     }
 }

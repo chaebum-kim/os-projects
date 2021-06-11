@@ -18,4 +18,7 @@ collatz: 4-collatz.c
 collatz_shm: 5-collatz_shm.c
 	$(CC) $(CFLAGS) -o collatz_shm 5-collatz_shm.c $(LRT)
 
+reverse: 9-reverse.c
+	$(CC) $(CFLAGS) -o reverse 9-reverse.c
+
 
