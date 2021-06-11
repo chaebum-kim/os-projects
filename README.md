@@ -9,7 +9,7 @@
 ### [Chapter3. Processes](https://github.com/chaebum-kim/os-projects/tree/master/ch3-processes)
 | No. | Name | Description |
 |---|---|---|
-|1|shell.c|A C program to serve as a shell interface|
+|1|1-shell|A C program to serve as a shell interface|
 
 ### [Chapter4. Threads & Concurrency ](https://github.com/chaebum-kim/os-projects/tree/master/ch4-threads-n-concurrency)
 | No. | Name | Description |
