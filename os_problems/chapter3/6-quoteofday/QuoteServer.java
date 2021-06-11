@@ -7,6 +7,7 @@ public class QuoteServer {
     public static void main(String[] args) {
         try {
             ServerSocket sock = new ServerSocket(6017);
+            Quote.loadQuote();
 
             // Listen for connections
             while (true) {
@@ -15,7 +16,6 @@ public class QuoteServer {
                 PrintWriter pout = new PrintWriter(client.getOutputStream(), true);
 
                 // Write the quote of the day to the socket
-                Quote.loadQuote();
                 Quote quoteOfDay = new Quote();
                 pout.println(quoteOfDay.randomQuote());
 
