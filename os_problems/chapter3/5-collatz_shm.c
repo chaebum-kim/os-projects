@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 
     char *ptr; // Pointer to shared memory object
     int fd;    // Shared memory file descriptor
-    int num, count;
+    int num;
 
     pid_t pid;
 
@@ -48,42 +48,31 @@ int main(int argc, char *argv[])
 
     if (pid == 0) // Child process
     {
-        count = 0;
-        char *p = ptr;
-
-        ptr += sizeof(int); // Leave space for the count variable
-
         while (num != 1)
         {
             // Write the number to the shared memory object
             memcpy(ptr, &num, sizeof(int));
-            count += 1;
             ptr += sizeof(int);
             num = collatz(num);
         }
         memcpy(ptr, &num, sizeof(int));
         ptr += sizeof(int);
-        count += 1;
-
-        // Write the count to the shared memory object
-        memcpy(p, &count, sizeof(int));
     }
     else // Parent process
     {
         wait(NULL);
 
         // Read from the shared memory object
+        int num;
 
-        // Read count
-        memcpy(&count, ptr, sizeof(int));
-        ptr += sizeof(int);
-
-        // Read numbers
-        for (int i = 0; i < count - 1; i++)
+        do
         {
-            printf("%d, ", ((int *)ptr)[i]);
-        }
-        printf("%d\n", ((int *)ptr)[count - 1]);
+            memcpy(&num, ptr, sizeof(int));
+            ptr += sizeof(int);
+            printf("%d ", num);
+        } while (num != 1);
+
+        printf("\n");
 
         // Remove the shared memory object
         shm_unlink(name);
@@ -109,7 +98,7 @@ int validate(int argc, char *argv[])
     // Check if the number of inputs is 1
     if (argc != 2)
     {
-        fprintf(stderr, "usage: ./collatz poistivie_integer\n");
+        fprintf(stderr, "usage: ./collatz_shm <poistivie integer>\n");
         exit(1);
     }
 
@@ -118,7 +107,7 @@ int validate(int argc, char *argv[])
     {
         if (!isdigit(argv[1][i]))
         {
-            fprintf(stderr, "usage: ./collatz poistivie_integer\n");
+            fprintf(stderr, "usage: ./collatz_shm <poistivie integer>\n");
             exit(1);
         }
     }
@@ -127,7 +116,7 @@ int validate(int argc, char *argv[])
     num = atoi(argv[1]);
     if (num <= 0)
     {
-        fprintf(stderr, "usage: ./collatz poistivie_integer\n");
+        fprintf(stderr, "usage: ./collatz_shm <poistivie integer>\n");
         exit(1);
     }
 

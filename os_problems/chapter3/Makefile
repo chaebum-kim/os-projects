@@ -15,3 +15,7 @@ time_shm: 2-time_shm.c
 collatz: 4-collatz.c
 	$(CC) $(CFLAGS) -o collatz 4-collatz.c
 
+collatz_shm: 5-collatz_shm.c
+	$(CC) $(CFLAGS) -o collatz_shm 5-collatz_shm.c $(LRT)
+
+
