@@ -8,6 +8,7 @@ public class HaikuServer {
     public static void main(String[] args) {
         try {
             ServerSocket sock = new ServerSocket(5575);
+            Haiku.loadHaiku();
 
             // Listen for the connections
             while (true) {
@@ -16,7 +17,6 @@ public class HaikuServer {
                 PrintWriter pout = new PrintWriter(client.getOutputStream(), true);
 
                 // Write to the socket
-                Haiku.loadHaiku();
                 Haiku haiku = new Haiku();
                 pout.println(haiku.randomHaiku());
 
