@@ -16,10 +16,11 @@ int main(int argc, char *argv[])
 
     if (pid == 0)
     {
-        printf("I am child process\n");
+        printf("I am child process %d\n", getpid());
     }
     else if (pid > 0)
     {
+        printf("I am parent process %d\n", getpid());
         while (1)
         {
             // Do nothing

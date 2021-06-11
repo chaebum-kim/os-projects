@@ -27,6 +27,12 @@ int main(int argc, char *argv[])
 
     double elapsed_time;
 
+    if (argc != 2)
+    {
+        fprintf(stderr, "Usage: ./time_shm <command>\n");
+        return 1;
+    }
+
     // Create the shared memory object
     fd = shm_open(name, O_CREAT | O_RDWR, 0666);
 

@@ -1,6 +1,6 @@
 /* 2-time_pipes.c
-** A program that determines the amount of time necessary to run a command
-** from the command line. This program used pipes as IPC mechanism.
+*  A program that determines the amount of time necessary to run a command
+*  from the command line. This program used pipes as IPC mechanism.
 */
 
 #include <sys/types.h>
@@ -19,6 +19,12 @@ int main(int argc, char *argv[])
     pid_t pid;
     struct timeval current, prev;
     double elapsed_time;
+
+    if (argc != 2)
+    {
+        fprintf(stderr, "Usage: ./time_pipes <command>\n");
+        return 1;
+    }
 
     // Create the pipe
     if (pipe(fd) == -1)

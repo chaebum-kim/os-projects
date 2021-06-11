@@ -27,9 +27,7 @@ int main(int argc, char *argv[])
     pid = fork();
 
     if (pid < 0)
-    {
         fprintf(stderr, "Fork Failed.");
-    }
 
     if (pid == 0) // Child process
     {
@@ -52,24 +50,20 @@ int main(int argc, char *argv[])
 int collatz(int num)
 {
     if (num % 2 == 0)
-    {
         return num / 2;
-    }
     else
-    {
         return 3 * num + 1;
-    }
 }
 
 /* Validate the user input */
 int validate(int argc, char *argv[])
 {
-    int length, num;
+    int num;
 
     // Check if the number of inputs is 1
     if (argc != 2)
     {
-        fprintf(stderr, "usage: ./collatz poistivie_integer\n");
+        fprintf(stderr, "usage: ./collatz <poistivie integer>\n");
         exit(1);
     }
 
@@ -78,7 +72,7 @@ int validate(int argc, char *argv[])
     {
         if (!isdigit(argv[1][i]))
         {
-            fprintf(stderr, "usage: ./collatz poistivie_integer\n");
+            fprintf(stderr, "usage: ./collatz <poistivie integer>\n");
             exit(1);
         }
     }
@@ -87,7 +81,7 @@ int validate(int argc, char *argv[])
     num = atoi(argv[1]);
     if (num <= 0)
     {
-        fprintf(stderr, "usage: ./collatz poistivie_integer\n");
+        fprintf(stderr, "usage: ./collatz <poistivie integer>\n");
         exit(1);
     }
 

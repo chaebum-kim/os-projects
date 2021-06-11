@@ -1,29 +1,15 @@
-/* 3-pid_manager.c
+/* pid_manager.c
 ** It is an API for obtaining and releasing a pid.
 */
 
 #include <stdlib.h>
 #include <stdio.h>
-
-#define MIN_PID 300
-#define MAX_PID 5000
-#define LENGTH 4701
-
-// Function prototypes
-int allocate_map();
-int allocate_pid();
-void release_pid(int pid);
-
-// Pointer to a pids map
-int *map;
+#include "pid_manager.h"
 
 /* Create and initialize a data structure for representing pids.
    Return -1 if unsuccessful, 1 if succesful. */
 int allocate_map()
 {
-    // Create a data structure representing pids
-    map = (int *)malloc(LENGTH * sizeof(int));
-
     // Initialize the data structure
     for (int i = 0; i < LENGTH; i++)
     {
@@ -52,35 +38,4 @@ int allocate_pid()
 void release_pid(int pid)
 {
     map[pid - MIN_PID] = 0;
-}
-
-// Test
-int main(int argc, char *argv[])
-{
-    int m, pid;
-    m = allocate_map();
-
-    // Allocate the map
-    if (m < 0)
-    {
-        fprintf(stderr, "Failed to allocate the map.");
-        return 1;
-    }
-
-    // Allocate pid
-    pid = allocate_pid();
-    if (pid < 0)
-    {
-        fprintf(stderr, "Failed to allocate pid.");
-        return 1;
-    }
-    printf("pid is %d\n", pid);
-
-    // Release pid
-    release_pid(pid);
-
-    // Free map
-    free(map);
-
-    return 0;
 }
