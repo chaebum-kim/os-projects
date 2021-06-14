@@ -1,9 +1,7 @@
 /* 2-fibonacci.c
-** A program that generates the Fibonacci sequence.
-** Parent thread can access Fibonacci numbers as soon as they were
-** computed by the child thread.
-** Compiled with gcc -pthread 2-fibonacci.c -o fibonacci 
-** Usage: ./fibonacci length
+*  A program that generates the Fibonacci sequence.
+*  Parent thread can access Fibonacci numbers as soon as they were
+*  computed by the child thread.
 */
 
 #include <pthread.h>
@@ -23,10 +21,14 @@ void *fibonacci(void *params);
 int main(int argc, char *argv[])
 {
     pthread_t tid;
-    pthread_attr_t attr;
     sem_t *full;
 
-    // Get user input
+    if (argc != 2)
+    {
+        fprintf(stderr, "Usage: ./fibonacci <length>");
+        return 1;
+    }
+    // Get the command line arguments
     length = atoi(argv[1]);
 
     // Allocate the memory
@@ -35,11 +37,8 @@ int main(int argc, char *argv[])
     // Create the semaphore and initialize it to 0
     full = sem_open("FULL", O_CREAT, 0666, 0);
 
-    // Set the default attributes of the thread
-    pthread_attr_init(&attr);
-
     // Create the thread
-    pthread_create(&tid, &attr, fibonacci, nums);
+    pthread_create(&tid, NULL, fibonacci, nums);
 
     // Print the result
     for (int i = 0; i < length; i++)
