@@ -5,12 +5,13 @@ public class test {
 
         ExecutorService pool = Executors.newFixedThreadPool(5);
 
-        // Create DiningPhilosophers object
-        DiningPhilosophers dp = new DiningPhilosophers();
+        // Create DiningTable object
+        DiningTable table = new DiningTable();
 
         // Submit the tasks
         for (int i = 0; i < 5; i++) {
-            pool.execute(new Philosopher(i, dp));
+            Philosopher philosopher = new Philosopher(i, table);
+            pool.execute(philosopher);
         }
     }
 }

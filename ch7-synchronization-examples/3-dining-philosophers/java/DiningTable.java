@@ -12,12 +12,12 @@ interface DiningServer {
     public void returnForks(int philosopherNumber);
 }
 
-class DiningPhilosophers implements DiningServer {
+class DiningTable implements DiningServer {
     private Condition[] self = new Condition[5];
     private Lock lock = new ReentrantLock();
     private State[] state = new State[5];
 
-    public DiningPhilosophers() {
+    public DiningTable() {
         for (int i = 0; i < 5; i++) {
             self[i] = lock.newCondition();
         }
