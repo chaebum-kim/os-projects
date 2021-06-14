@@ -1,6 +1,3 @@
-/* main.c
-** Usage: ./main sleep_length(sec) #_of_producer_threads #_of_consumer_threads\n
-*/
 
 #include <stdlib.h>
 #include <pthread.h>
@@ -19,7 +16,7 @@ int main(int argc, char *argv[])
 
     if (argc != 4)
     {
-        fprintf(stderr, "Usage: ./main sleep_length(sec) #_of_producer_threads #_of_consumer_threads\n");
+        fprintf(stderr, "Usage: ./main <seconds to sleep> <# of producer threads> <# of consumer threads>\n");
         return 1;
     }
 
