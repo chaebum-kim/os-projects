@@ -1,21 +1,20 @@
-#ifndef QUEUE
-#define QUEUE
+#ifndef QUEUE_H
+#define QUEUE_H
 
-typedef struct _node node;
+typedef struct _node Node;
 typedef struct _node
 {
-    node *next;
-} node;
+    Node *next;
+} Node;
 
-typedef struct queue
+typedef struct _queue
 {
-    node *head;
-    node *tail;
-} queue;
+    Node *head;
+    Node *tail;
+} Queue;
 
-void queue_create(queue *queue);
-int is_empty(queue *queue);
-node *queue_enqueue(queue *queue, void *object);
-void queue_dequeue(queue *queue, void *object);
+void queue_create(Queue *queue);
+Node *queue_enqueue(Queue *queue, void *object, size_t size);
+void queue_dequeue(Queue *queue, void *object, size_t size);
 
 #endif

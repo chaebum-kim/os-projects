@@ -2,35 +2,21 @@
 #include <memory.h>
 #include "queue.h"
 
-void queue_create(queue *queue)
+void queue_create(Queue *queue)
 {
     queue->head = NULL;
     queue->tail = NULL;
 }
 
-int is_empty(queue *queue)
+Node *queue_enqueue(Queue *queue, void *object, size_t size)
 {
-    if (queue->head == NULL)
-    {
-        return 0;
-    }
-    else
-    {
-        return 1;
-    }
-}
-
-node *queue_enqueue(queue *queue, void *object)
-{
-    node *temp = NULL;
-    temp = (node *)malloc(sizeof(node) + sizeof(*object));
+    Node *temp = NULL;
+    temp = (Node *)malloc(sizeof(Node) + size);
 
     if (temp == NULL)
-    {
         return NULL;
-    }
 
-    memcpy(temp + 1, object, sizeof(*object));
+    memcpy(temp + 1, object, size);
 
     temp->next = NULL;
 
@@ -48,10 +34,18 @@ node *queue_enqueue(queue *queue, void *object)
     return queue->tail;
 }
 
-void queue_dequeue(queue *queue, void *object)
+void queue_dequeue(Queue *queue, void *object, size_t size)
 {
-    memcpy(object, queue->head + 1, sizeof(*object));
-    node *temp = queue->head->next;
+    memcpy(object, queue->head + 1, size);
+    Node *temp = queue->head->next;
+
     free(queue->head);
-    queue->head = temp;
+
+    if (temp == NULL)
+    {
+        queue->head = NULL;
+        queue->tail = NULL;
+    }
+    else
+        queue->head = temp;
 }

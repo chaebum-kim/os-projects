@@ -14,17 +14,14 @@
 
 // this represents work that has to be
 // completed by a thread in the pool
-typedef struct
+typedef struct _task
 {
     void (*function)(void *p);
     void *data;
 } task;
 
 // the work queue
-queue work_queue;
-
-// the task
-task worktodo;
+Queue work_queue;
 
 // the worker bee
 pthread_t bees[NUMBER_OF_THREADS];
@@ -37,10 +34,8 @@ pthread_mutex_t mutex;
 // returns 0 if successful or 1 otherwise,
 int enqueue(task t)
 {
-    if (queue_enqueue(&work_queue, &t) == NULL)
-    {
+    if (queue_enqueue(&work_queue, &t, sizeof(task)) == NULL)
         return 1;
-    }
 
     return 0;
 }
@@ -48,13 +43,16 @@ int enqueue(task t)
 // remove a task from the queue
 task dequeue()
 {
-    queue_dequeue(&work_queue, &worktodo);
-    return worktodo;
+    task temp;
+    queue_dequeue(&work_queue, &temp, sizeof(task));
+    return temp;
 }
 
 // the worker thread in the thread pool
 void *worker(void *param)
 {
+    task worktodo;
+
     while (TRUE)
     {
         // Acquire the semaphore
@@ -83,12 +81,14 @@ void execute(void (*somefunction)(void *p), void *p)
  */
 int pool_submit(void (*somefunction)(void *p), void *p)
 {
-    worktodo.function = somefunction;
-    worktodo.data = p;
+    task work;
 
-    // Add the task to tue queue
+    work.function = somefunction;
+    work.data = p;
+
+    // Add the task to the queue
     pthread_mutex_lock(&mutex);
-    if (enqueue(worktodo) != 0)
+    if (enqueue(work) != 0)
     {
         fprintf(stderr, "Pool Submisson Failed\n");
         pthread_mutex_unlock(&mutex);
@@ -112,11 +112,9 @@ void pool_init(void)
     sem_init(&sem, 0, 0);
     pthread_mutex_init(&mutex, NULL);
 
-    // Create the thread
+    // Create the threads
     for (int i = 0; i < NUMBER_OF_THREADS; i++)
-    {
         pthread_create(&(bees[i]), NULL, worker, NULL);
-    }
 }
 
 // shutdown the thread pool

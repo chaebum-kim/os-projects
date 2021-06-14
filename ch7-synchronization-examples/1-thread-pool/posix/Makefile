@@ -8,9 +8,6 @@ PTHREADS=-lpthread
 all: client.o threadpool.o queue.o
 	$(CC) $(CFLAGS) -o example client.o threadpool.o queue.o $(PTHREADS)
 
-client.o: client.c
-	$(CC) $(CFLAGS) -c client.c $(PTHREADS)
-
 queue.o: queue.c queue.h
 	$(CC) $(CFLAGS) -c queue.c
 
