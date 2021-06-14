@@ -1,8 +1,7 @@
 /* 3-pi_thread.c
-** A program that calcuates pi using Monte Carlo technique.
-** This program utilizes a thread to generate a number of random points
-** and count the number of points that occur within the circle.
-** Compiled with gcc -pthread 3-pi_thread.c -o pi -lm.
+*  A program that calcuates pi using Monte Carlo technique.
+*  This program utilizes a thread to generate a number of random points
+*  and count the number of points that occur within the circle.
 */
 
 #include <pthread.h>
@@ -27,13 +26,9 @@ int count_incircle(double points[][2]);
 int main(int argc, char *argv[])
 {
     pthread_t tid;
-    pthread_attr_t attr;
-
-    // Set the default attributes of the thread
-    pthread_attr_init(&attr);
 
     // Create the thread
-    pthread_create(&tid, &attr, monte_carlo, NULL);
+    pthread_create(&tid, NULL, monte_carlo, NULL);
 
     // Wait for the thread to exit
     pthread_join(tid, NULL);
