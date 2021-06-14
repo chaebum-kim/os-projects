@@ -1,6 +1,6 @@
-/* sudoku_validator.c
-** A multithreaded program that determines whether the solution to 
-** a 9x9 Sudoku puzzle is valid.
+/* validator.c
+*  A multithreaded program that determines whether the solution to 
+*  a 9x9 Sudoku puzzle is valid.
 */
 
 #include <pthread.h>
@@ -20,7 +20,7 @@ typedef struct
 } parameters;
 
 // Global variables
-int (*sudoku)[LENGTH];
+int sudoku[LENGTH][LENGTH];
 int row_checks[LENGTH] = {0};
 int col_checks[LENGTH] = {0};
 int box_checks[LENGTH] = {0};
@@ -31,7 +31,6 @@ void *check_col(void *param);
 void *check_box(void *param);
 
 // Helper function
-int validate_input(int args);
 int load_file(char *argv);
 int get_max_row(int box);
 int get_max_col(int box);
@@ -41,8 +40,11 @@ int main(int args, char *argv[])
     pthread_t tids[THREADS] = {0};
     parameters *data[9];
 
-    if (validate_input(args) != 0)
+    if (args != 2)
+    {
+        printf("Usage: ./validator <file name>\n");
         return 1;
+    }
 
     // Load file
     if (load_file(argv[1]) != 0)
@@ -76,9 +78,6 @@ int main(int args, char *argv[])
     // Free data
     for (int i = 0; i < LENGTH; i++)
         free(data[i]);
-
-    // Free sudoku
-    free(sudoku);
 
     // Check the result
     for (int i = 0; i < LENGTH; i++)
@@ -190,28 +189,12 @@ int get_max_col(int box)
         return 8;
 }
 
-int validate_input(int args)
-{
-    if (args != 2)
-    {
-        printf("Usage: ./validator file_name\n");
-        return 1;
-    }
-    return 0;
-}
-
 int load_file(char *argv)
 {
     FILE *file = fopen(argv, "r");
 
     if (file == NULL)
-    {
-        perror("Failed");
         return 1;
-    }
-
-    // Allocate memory
-    sudoku = malloc(sizeof(int) * LENGTH * LENGTH);
 
     // Save the file to the sudoku array
     for (int row = 0; row < 9; row++)
@@ -220,10 +203,7 @@ int load_file(char *argv)
         {
             fscanf(file, "%d, ", &(sudoku[row][col]));
             if (sudoku[row][col] == 0)
-            {
-                printf("Invalid File\n");
                 return 1;
-            }
         }
     }
 
