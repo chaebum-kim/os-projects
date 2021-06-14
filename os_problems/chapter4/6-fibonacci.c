@@ -1,6 +1,5 @@
 /* 6-fibonacci.c
-** A program that generates the Fibonacci sequence
-** Compiled with gcc -pthread 6-fibonacci.c -o fibonacci 
+*  A program that generates the Fibonacci sequence
 */
 
 #include <pthread.h>
@@ -18,29 +17,25 @@ void *fibonacci(void *params);
 int main(int argc, char *argv[])
 {
     pthread_t tid;
-    pthread_attr_t attr;
 
-    // Get user input
+    // Get the command line arguments
     length = atoi(argv[1]);
 
     // Allocate the memory
     nums = (int *)malloc(sizeof(int) * length);
 
-    // Set the default attributes of the thread
-    pthread_attr_init(&attr);
-
     // Create the thread
-    pthread_create(&tid, &attr, fibonacci, nums);
+    pthread_create(&tid, NULL, fibonacci, nums);
 
     // Wait for the thread to exit
     pthread_join(tid, NULL);
 
     // Print the result
     for (int i = 0; i < length; i++)
-    {
         printf("%d ", nums[i]);
-    }
     printf("\n");
+
+    free(nums);
 
     return 0;
 }
