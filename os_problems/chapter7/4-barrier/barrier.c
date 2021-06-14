@@ -1,13 +1,9 @@
 /* barrier.c
-** A barrier API for synchronizing the activity of a number of threads.
+*  A barrier API for synchronizing the activity of a number of threads.
 */
 
 #include "barrier.h"
 #include <pthread.h>
-
-int threads;
-pthread_mutex_t mutex;
-pthread_cond_t cond_var;
 
 int init(int n)
 {
@@ -25,7 +21,7 @@ int barrier_point(void)
 {
     pthread_mutex_lock(&mutex);
     threads -= 1;
-    while (threads > 0)
+    while (threads != 0)
         pthread_cond_wait(&cond_var, &mutex);
     pthread_cond_signal(&cond_var);
     pthread_mutex_unlock(&mutex);

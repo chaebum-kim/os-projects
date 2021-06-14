@@ -12,18 +12,13 @@ void *worker(void *);
 int main(int argc, char *argv[])
 {
     pthread_t tids[THREADS];
-    pthread_attr_t attrs[THREADS];
-
-    // Set the default attributes of the threads
-    for (int i = 0; i < THREADS; i++)
-        pthread_attr_init(&(attrs[i]));
 
     // Initialize the barrier
     init(THREADS);
 
     // Create the threads
     for (int i = 0; i < THREADS; i++)
-        pthread_create(&(tids[i]), &(attrs[i]), worker, NULL);
+        pthread_create(&(tids[i]), NULL, worker, NULL);
 
     // Wait for threads to exit
     for (int i = 0; i < THREADS; i++)
