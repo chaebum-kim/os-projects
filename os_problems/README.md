@@ -28,13 +28,13 @@
 |4.25|4-pi_openmp.c|A program that calcuates pi using Monte Carlo technique. <br>It used OpenMp to parallelize the generation of points.|
 |4.26|5-date|Date server that services each client request in a separate thread.|
 |4.27|6-fibonacci.c|A multithreaded program that generates the Fibonacci sequence.|
-|4.28|7-pid_manager.c|A multithreaded program that tests pid manager from problem3.20|
+|4.28|7-pid-manager|A multithreaded program that tests pid manager from problem3.20|
 |4.29|8-echo|Echo server that services each client request in a separate thread.|
 
 ### [Chapter7](https://github.com/chaebum-kim/os-projects/tree/master/os_problems/chapter7)
 | No | Name | Description |
 |---|---|---|
-|7.14|1-pid_manager.c|Modified problem 4.28 to ensure that race condition is prevented.|
+|7.14|1-pid-manager|Modified problem 4.28 to ensure that race condition is prevented.|
 |7.15|2-fibonacci.c|Modified problem 4.27 so that parent thread can access finbonacci numbers <br>as soon as they are computed by child thread.|
 |7.17|3-pi_thread.c|A multi-threaded program that calculates pi using Monte Carlo technique. <br>Race condition is prevented.|
 |7.19|4-barrier|A barrier API|
