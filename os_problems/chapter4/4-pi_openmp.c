@@ -1,7 +1,6 @@
 /* 4-pi_openmp.c
-** A program that calcuates pi using Monte Carlo technique.
-** This program utilizes OpenMp to parallelize the generation of points.
-** Compiled with gcc -fopenmp 4-pi_openmp.c -o pi2 -lm.
+*  A program that calcuates pi using Monte Carlo technique.
+*  This program utilizes OpenMp to parallelize the generation of points.
 */
 
 #include <omp.h>
@@ -9,7 +8,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
-#include <sys/time.h>
 
 #define TOTAL 10000
 
