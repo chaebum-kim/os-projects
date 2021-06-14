@@ -1,9 +1,8 @@
 /* 3-pi.c
-** A program that calcuates pi using Monte Carlo technique.
-** This program utilizes several threads, each of which generates
-** random points, count the points within the circle, and update
-** the global count.
-** Compiled with gcc -pthread 3-pi_thread.c -o pi -lm.
+*  A program that calcuates pi using Monte Carlo technique.
+*  This program utilizes several threads, each of which generates
+*  random points, count the points within the circle, and update
+*  the global count.
 */
 
 #include <pthread.h>
@@ -11,16 +10,16 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
-#include <sys/time.h>
 
 #define TOTAL 5000
 #define THREADS 5
 
 // Global variables
 int count = 0;
+pthread_mutex_t mutex;
 
 // Worker function
-void *monte_carlo(void *mutex);
+void *monte_carlo(void *);
 
 // Helper function
 void generate_random_points(double points[][2]);
@@ -29,19 +28,13 @@ int count_incircle(double points[][2]);
 int main(int argc, char *argv[])
 {
     pthread_t tids[THREADS];
-    pthread_attr_t attrs[THREADS];
-    pthread_mutex_t mutex;
 
     // Create and initialize the mutex lock
     pthread_mutex_init(&mutex, NULL);
 
-    // Set the default attributes of the threads
-    for (int i = 0; i < THREADS; i++)
-        pthread_attr_init(&(attrs[i]));
-
     // Create the threads
     for (int i = 0; i < THREADS; i++)
-        pthread_create(&(tids[i]), &(attrs[i]), monte_carlo, &mutex);
+        pthread_create(&(tids[i]), NULL, monte_carlo, NULL);
 
     // Wait for the threads to exit
     for (int i = 0; i < THREADS; i++)
@@ -53,9 +46,8 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-void *monte_carlo(void *param)
+void *monte_carlo(void *unused)
 {
-    pthread_mutex_t *mutex = (pthread_mutex_t *)param;
     double points[TOTAL][2];
     int mycount;
 
@@ -66,9 +58,9 @@ void *monte_carlo(void *param)
     mycount = count_incircle(points);
 
     // Update the global count
-    pthread_mutex_lock(mutex);
+    pthread_mutex_lock(&mutex);
     count += mycount;
-    pthread_mutex_unlock(mutex);
+    pthread_mutex_unlock(&mutex);
 
     pthread_exit(0);
 }
