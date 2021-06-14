@@ -1,81 +1,54 @@
-/* sort_mt.c
-** A multithreaded sorting program.
+/* sort`.c
+*  A multithreaded sorting application
 */
 
 #include <pthread.h>
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "sort.h"
 
-// Structure for passing data to threads
-typedef struct
+int sort(int *nums, int *sorted_nums, size_t size)
 {
-    int start;
-    int end;
-} indexes;
+    int half = size / 2;
+    pthread_t tids[3];
+    Range *data[2];
 
-// Global variables
-int *array;
-int *sorted_array;
-int length;
-
-// Worker functions
-void *sort(void *param);
-void *merge(void *param);
-
-int main(int argc, char *argv[])
-{
-    int nums[] = {7, 12, 19, 3, 18, 4, 2, 6, 15, 8};
-    int half;
-    pthread_t tids[3] = {0};
-    pthread_attr_t attrs[3] = {0};
-    indexes *data[2];
-
+    // Set the global variables
     array = nums;
-    length = sizeof(nums) / sizeof(nums[0]);
-    half = (int)ceil(length / 2.0);
+    sorted_array = sorted_nums;
 
     // Assingn data
-    data[0] = (indexes *)malloc(sizeof(indexes));
+    data[0] = (Range *)malloc(sizeof(Range));
     data[0]->start = 0;
     data[0]->end = half - 1;
-    data[1] = (indexes *)malloc(sizeof(indexes));
+    data[1] = (Range *)malloc(sizeof(Range));
     data[1]->start = half;
-    data[1]->end = length - 1;
-
-    // Set the default attributes of the threads
-    for (int i = 0; i < 3; i++)
-    {
-        pthread_attr_init(&(attrs[i]));
-    }
+    data[1]->end = size - 1;
 
     // Create the sorting threads
-    pthread_create(&(tids[0]), &(attrs[0]), sort, data[0]);
-    pthread_create(&(tids[1]), &(attrs[1]), sort, data[1]);
+    pthread_create(&(tids[0]), NULL, partial_sort, data[0]);
+    pthread_create(&(tids[1]), NULL, partial_sort, data[1]);
 
     // Wait for the sorting threads to exit
     pthread_join(tids[0], NULL);
     pthread_join(tids[1], NULL);
 
     // Create the merging thread
-    pthread_create(&(tids[2]), &(attrs[2]), merge, data[1]);
+    pthread_create(&(tids[2]), NULL, merge, data[1]);
 
     // Wait for the merging thread to exit
     pthread_join(tids[2], NULL);
 
-    // Print the result
-    for (int i = 0; i < length; i++)
-    {
-        printf("%d ", sorted_array[i]);
-    }
-    printf("\n");
+    // Free data
+    for (int i = 0; i < 2; i++)
+        free(data[i]);
 
     return 0;
 }
 
-void *sort(void *param)
+void *partial_sort(void *param)
 {
-    indexes *data = (indexes *)param;
+    Range *data = (Range *)param;
     int start = data->start, end = data->end;
 
     for (int i = start; i <= end; i++)
@@ -96,13 +69,10 @@ void *sort(void *param)
 
 void *merge(void *param)
 {
-    indexes *data = (indexes *)param;
+    Range *data = (Range *)param;
     int start1 = 0, end1 = data->start - 1;
-    int start2 = data->start, end2 = length - 1;
+    int start2 = data->start, end2 = data->end;
     int i = 0;
-
-    // Allocate sorted array
-    sorted_array = (int *)malloc(sizeof(int) * (length));
 
     // Merge
     while (start1 <= end1 && start2 <= end2)
