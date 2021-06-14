@@ -1,7 +1,6 @@
 /* 1-static.c
-** A multithreaded program that calcuates the average, the maximum,
-** the minimun values or numbers respectively.
-** Compiled and linked with gcc -pthread 1-static.c -o static
+*  A multithreaded program that calcuates the average, the maximum,
+*  the minimun values or numbers respectively.
 */
 
 #include <pthread.h>
@@ -23,32 +22,22 @@ void *min(void *nums);
 int main(int argc, char *argv[])
 {
     pthread_t tids[3];
-    pthread_attr_t attrs[3];
     void *p[3] = {avg, max, min};
     int *nums;
 
-    // Save user inputs into array of numbers
+    // Save command line arguments into array of numbers
     length = argc - 1;
     nums = (int *)malloc(sizeof(int) * length);
     for (int i = 0; i < length; i++)
-    {
         nums[i] = atoi(argv[i + 1]);
-    }
 
+    // Create the thread
     for (int i = 0; i < 3; i++)
-    {
-        // Set the default attributes of the threads
-        pthread_attr_init(&(attrs[i]));
-
-        // Create the thread
-        pthread_create(&(tids[i]), &(attrs[i]), p[i], nums);
-    }
+        pthread_create(&(tids[i]), NULL, p[i], nums);
 
     // Wait for the thread to exit
     for (int i = 0; i < 3; i++)
-    {
         pthread_join(tids[i], NULL);
-    }
 
     // Print the results
     printf("The average value is %d\n", average);
@@ -66,9 +55,7 @@ void *avg(void *nums)
     int sum = 0;
 
     for (int i = 0; i < length; i++)
-    {
         sum += nums_[i];
-    }
 
     average = sum / length;
 
