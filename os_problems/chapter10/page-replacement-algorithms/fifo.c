@@ -29,7 +29,7 @@ int fifo_simulate(char *page_reference, int frame_nums)
         // Check if the page is on the memory
         frame_num = page_table[page_num];
 
-        // If page fault occur_nums
+        // If page fault occurs
         if (frame_num < 0)
         {
             page_faults++;
