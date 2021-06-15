@@ -23,3 +23,4 @@
 6. RQ 4 4 2 1 2 -> Granted
 7. RQ 0 2 0 0 0 -> Denied due to the lack of available resources
 8. RQ 0 1 0 0 2 -> Denied because it leaves the system in an unsafe state
+9. exit

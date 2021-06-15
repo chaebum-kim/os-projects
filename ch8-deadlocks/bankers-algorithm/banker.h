@@ -13,6 +13,6 @@ void init_maximum(char *filename);
 void init_need(void);
 int request_resources(int customer_num, int request[]);
 void release_resources(int customer_num, int release[]);
-int check_safety();
+int is_safe();
 
 int compare_array(int *array1, int *array2, int length);

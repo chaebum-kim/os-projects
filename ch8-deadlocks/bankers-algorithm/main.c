@@ -77,7 +77,7 @@ int request(int argc, char *args[])
 
     if (argc != 5)
     {
-        printf("Usage: RQ customer_num resources\n");
+        printf("Usage: RQ <customer_num> <# of resources>\n");
         return -1;
     }
 

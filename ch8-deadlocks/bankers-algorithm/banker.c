@@ -7,7 +7,7 @@ void init_available(int argc, char *argv[])
 {
     if (argc != 5)
     {
-        printf("Usage: ./main 10 5 7 8\n");
+        printf("Usage: ./main <# of resources>\n");
         exit(1);
     }
 
@@ -50,7 +50,7 @@ int request_resources(int customer_num, int request[])
         need[customer_num][i] -= request[i];
     }
 
-    if (check_safety() < 0)
+    if (is_safe() < 0)
     {
         // Roll back
         release_resources(customer_num, request);
@@ -70,7 +70,7 @@ void release_resources(int customer_num, int release[])
     }
 }
 
-int check_safety()
+int is_safe()
 {
     int work[NUMBER_OF_RESOURCES];
     int finish[NUMBER_OF_CUSTOMERS] = {
