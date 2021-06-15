@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 
     if (argc != 2)
     {
-        fprintf(stderr, "Usage: ./schedule head_position\n");
+        fprintf(stderr, "Usage: ./schedule <head position>\n");
         return 1;
     }
 
