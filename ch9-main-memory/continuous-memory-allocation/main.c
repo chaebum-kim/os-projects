@@ -21,14 +21,12 @@ int main(int argc, char *argv[])
 
     if (argc != 2)
     {
-        fprintf(stderr, "Usage: ./allocator size\n");
+        fprintf(stderr, "Usage: ./allocator <amount of memory>\n");
         return 1;
     }
 
-    MAX = strtoul(argv[1], NULL, 0);
-
     // Initialize the memory
-    init_memory(MAX);
+    init_memory(strtoul(argv[1], NULL, 0));
 
     while (1)
     {
@@ -42,9 +40,9 @@ int main(int argc, char *argv[])
         n = parse_input(input, args);
 
         if (strcasecmp(args[0], "RQ") == 0)
-            request(n, args);
+            request(n - 1, args + 1);
         else if (strcasecmp(args[0], "RL") == 0)
-            release(n, args);
+            release(n - 1, args + 1);
         else if (strcasecmp(args[0], "STAT") == 0)
             report();
         else if (strcasecmp(args[0], "X") == 0)
@@ -75,27 +73,27 @@ int request(int argc, char *args[])
     ulong size;
     Flag flag;
 
-    if (argc != 4)
+    if (argc != 3)
     {
-        fprintf(stderr, "Usage: RQ name size flag\n");
+        fprintf(stderr, "Usage: RQ <name> <size> <flag>\n");
         return -1;
     }
 
-    size = strtoul(args[2], NULL, 0);
+    size = strtoul(args[1], NULL, 0);
 
-    if (strcasecmp(args[3], "F") == 0)
+    if (strcasecmp(args[2], "F") == 0)
         flag = F;
-    else if (strcasecmp(args[3], "B") == 0)
+    else if (strcasecmp(args[2], "B") == 0)
         flag = B;
-    else if (strcasecmp(args[3], "W") == 0)
+    else if (strcasecmp(args[2], "W") == 0)
         flag = W;
     else
     {
-        fprintf(stderr, "Error: Unrecognized flag %s", args[3]);
+        fprintf(stderr, "Error: Unrecognized flag %s", args[2]);
         return -1;
     }
 
-    if (request_memory(args[1], size, flag) < 0)
+    if (request_memory(args[0], size, flag) < 0)
     {
         fprintf(stderr, "Failed: Not enough memory\n");
         return -1;
@@ -106,13 +104,13 @@ int request(int argc, char *args[])
 
 int release(int argc, char *args[])
 {
-    if (argc != 2)
+    if (argc != 1)
     {
-        fprintf(stderr, "Usage: RL name\n");
+        fprintf(stderr, "Usage: RL <name>\n");
         return -1;
     }
 
-    release_memory(args[1]);
+    release_memory(args[0]);
 
     return 0;
 }

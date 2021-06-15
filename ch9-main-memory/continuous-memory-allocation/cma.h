@@ -32,6 +32,7 @@ typedef enum _flag
     W
 } Flag;
 
+// Amount of memory
 ulong MAX;
 
 void init_memory(ulong size);
