@@ -1,5 +1,5 @@
 /* 1-bridge.c
-** Solution to Exercise 8.30 using posix synchronization
+* Solution to Exercise 8.30 using posix synchronization
 */
 
 #include <pthread.h>
