@@ -45,6 +45,8 @@ int main(int argc, char *argv[])
             release(n - 1, args + 1);
         else if (strcasecmp(args[0], "STAT") == 0)
             report();
+        else if (strcasecmp(args[0], "C") == 0)
+            compact();
         else if (strcasecmp(args[0], "X") == 0)
             break;
         else
