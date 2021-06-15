@@ -53,7 +53,7 @@
 ### [Chapter10](https://github.com/chaebum-kim/os-projects/tree/master/os_problems/chapter10)
 | No | Name | Description |
 |---|---|---|
-|10.44|main.c|A program that implements the FIFO, LRU, and OPT page-replacement algorithms.|
+|10.44|page-replacement-algorithms|A program that implements the FIFO, LRU, and OPT page-replacement algorithms.|
 
 ### [Chapter11](https://github.com/chaebum-kim/os-projects/tree/master/os_problems/chapter11)
 | No | Name | Description |
