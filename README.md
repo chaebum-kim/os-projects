@@ -44,7 +44,7 @@
 ### [Chapter10. Virtual Memory ](https://github.com/chaebum-kim/os-projects/tree/master/ch10-virtual-memory)
 | No. | Name | Description |
 |---|---|---|
-|1|virtual-memory-manager|A program that translates logical to physical addresses for a virtual address space size 65,536 bytes.<br>The program includes resolving page faults using demand paging, managing a TLB, <br>and implementing page-replacement algorithm(FIFO).
+|1|virtual-memory-manager|A program that translates logical to physical addresses for a virtual address space size 65,536 bytes.<br>The program includes resolving page faults using demand paging, managing a TLB, and implementing page-replacement algorithm(FIFO).
 
 
 
