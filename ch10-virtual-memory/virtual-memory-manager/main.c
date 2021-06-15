@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 
     if (argc != 2)
     {
-        fprintf(stderr, "Usage: ./main filename\n");
+        fprintf(stderr, "Usage: ./main <file name>\n");
         return 1;
     }
 
