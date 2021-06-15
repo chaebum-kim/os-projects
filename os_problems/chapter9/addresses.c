@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 
     if (argc != 2)
     {
-        fprintf(stderr, "Usage: ./addresses virtual_address\n");
+        fprintf(stderr, "Usage: ./addresses <virtual address>\n");
         return 1;
     }
 
